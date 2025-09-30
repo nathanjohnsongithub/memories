@@ -24,6 +24,7 @@
 			--bg-end:   #f59e0b;   /* orange */
 			--brand:    #ef4444;   /* primary accent (red) */
 			--accent:   #d22c2c;   /* subtle accent tuned closer to the warm gradient (orange-tinted) */
+			--text:     #e23a56;   /* default text color (slate-700) */
 		}
 
 		* { box-sizing: border-box; }
@@ -178,6 +179,14 @@
 			box-shadow: 0 18px 50px rgba(251,146,60,0.08);
 		}
 
+        /* Ensure interactive (dynamic) timeline cards show the same hover/focus styles */
+        .timeline-content[role="button"]:focus,
+        .timeline-content[role="button"]:hover {
+            outline: none;
+            border-color: rgba(251,146,60,0.18);
+            box-shadow: 0 18px 50px rgba(251,146,60,0.08);
+        }
+
 		/* Inline expansion area for each timeline card */
 		.timeline-extra {
 			max-height: 0;
@@ -325,10 +334,10 @@
 				<div class="px-8 py-10 text-center">
 					<!-- Keep page-appropriate title but match typography -->
 					<h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-						Our Journey Together <span aria-hidden="true">✨</span>
+						Our Journey Together </span>
 					</h1>
 					<p class="mt-3 text-slate-600 max-w-2xl mx-auto">
-						A timeline of our beautiful story
+						A timeline of our story. From the first pier talk to our one year anniversary.
 					</p>
 
 					<!-- Buttons styled exactly like index.html -->
@@ -358,12 +367,12 @@
 				 data-modal-open="memory-first-meeting"
 				 data-expands-from
 				 aria-label="Open memory: First Meeting">
-					<div class="timeline-date">January 2023</div>
-					<h3 class="timeline-title">First Meeting</h3>
+					<div class="timeline-date">September 2024</div>
+					<h3 class="timeline-title">First Pier Talk</h3>
 					<p class="timeline-description">
-						The day our paths crossed and everything changed. A chance encounter that would become the beginning of our beautiful story.
+						The very first time we hung out. On the pier outside of my house. We talked for hours and hours and there was a baking pan for some reason.	 
 					</p>
-					<img src="./images/first_date.jpg" alt="First meeting" class="timeline-image" />
+					<img src="./images/timeline/IMG_7924.jpeg" alt="First meeting" class="timeline-image" />
 					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
 					<div class="timeline-extra" aria-hidden="true">
 						<div class="rounded-xl p-4 mt-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255, 255, 255, 0.5);">
@@ -383,25 +392,26 @@
 
 			<!-- Timeline Item 2 -->
 			<!-- Example: this item uses a named preset -->
-			<div class="timeline-item right" data-aos="fade-left" data-theme="romance">
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#ea2121" data-bg-mid="#ea2121" data-bg-end="#ea2121" data-accent="#ea2121" data-brand="#ea2121">
 				<div class="timeline-marker"></div>
 				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
 				 role="button" tabindex="0"
 				 data-modal-open="memory-first-date"
 				 data-expands-from
 				 aria-label="Open memory: First Date">
-					<div class="timeline-date">February 2023</div>
+					<div class="timeline-date">September 2025</div>
 					<h3 class="timeline-title">First Date</h3>
 					<p class="timeline-description">
-						Our first official date - nervous butterflies, endless conversations, and the realization that we had something special.
+						Our first official date at the Art Institute of Chicago, followed by sushi, and then boba, and then wingstop? Wow we we're fat.
 					</p>
-					<img src="./images/ice_cream_comedy_club.jpg" alt="First date" class="timeline-image" />
+					<img src="./images/first_date.jpg" alt="First date" class="timeline-image" />
 					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
 					<div class="timeline-extra" aria-hidden="true">
 						<div class="rounded-xl p-4 mt-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.04), rgba(239,68,68,0.03), rgba(245,158,11,0.03)); border: 1px solid rgba(255,255,255,0.5);">
 							<h3 class="font-semibold" style="color: var(--accent); margin-bottom: .25rem;">Anecdote</h3>
 							<p style="color: rgba(31,41,55,0.9);">
-								We laughed over our shared dessert choices and traded stories about the worst meals we'd ever had.
+								Does this do anything?
 							</p>
 						</div>
 
@@ -413,155 +423,328 @@
 				</div>
 			</div>
 
-			<!-- Timeline Item 3 -->
-			<div class="timeline-item left" data-aos="fade-right">
+					<!-- Timeline Item 3 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#e13d1d" data-bg-mid="#e13d1d" data-bg-end="#e13d1d" data-accent="#e13d1d" data-brand="#e13d1d">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">March 2023</div>
-					<h3 class="timeline-title">Becoming Official</h3>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-second-meeting"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">October 5th 2024</div>
+					<h3 class="timeline-title">Our Anniversary</h3>
 					<p class="timeline-description">
-						The moment we decided to make it official. No more wondering, no more games - just us, together, ready to see where this journey would take us.
+						Charles please work thank you lord for working thank you
 					</p>
+					<img src="./images/timeline/unnamed.jpg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+						<div class="rounded-xl p-4 mt-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255, 255, 255, 0.5);">
+							<h3 class="font-semibold" style="color: var(--accent); margin-bottom: .25rem;">Anecdote</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								blah
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 
 			<!-- Timeline Item 4 -->
-			<div class="timeline-item right" data-aos="fade-left">
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">April 2023</div>
-					<h3 class="timeline-title">Meeting the Family</h3>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-so-many-dates"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">October 2024</div>
+					<h3 class="timeline-title">So Many Dates</h3>
 					<p class="timeline-description">
-						The big step of meeting each other's families. Nervous introductions that turned into warm welcomes and the beginning of extended family bonds.
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
 					</p>
+					<img src="./images/planeterium.jpg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
 				</div>
 			</div>
 
-			<!-- Timeline Item 5 -->
-			<div class="timeline-item left" data-aos="fade-right">
+		<!-- Timeline Item 5 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#f05455" data-bg-mid="#f05455" data-bg-end="#f05455" data-accent="#f05455" data-brand="#f05455">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">May 2023</div>
-					<h3 class="timeline-title">First Adventure</h3>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-5"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">November 2024</div>
+					<h3 class="timeline-title">Some more dates and the onset of unease</h3>
 					<p class="timeline-description">
-						Our first big adventure together - exploring new places, making memories, and learning that we make the perfect travel companions.
+						Charles please work thank you lord for working thank you
 					</p>
-					<img src="./images/5k.jpg" alt="First adventure" class="timeline-image" />
+					<img src="./images/timeline/IMG_4730.jpeg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+					</div>
 				</div>
 			</div>
 
 			<!-- Timeline Item 6 -->
-			<div class="timeline-item right" data-aos="fade-left">
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">June 2023</div>
-					<h3 class="timeline-title">Summer of Love</h3>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-6"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">December 2024</div>
+					<h3 class="timeline-title">The Dark Days</h3>
 					<p class="timeline-description">
-						Long summer days filled with laughter, spontaneous dates, and falling deeper in love with each passing moment.
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
 					</p>
-					<img src="./images/sunset.jpg" alt="Summer memories" class="timeline-image" />
+					<img src="./images/timeline/IMG_4860.jpeg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
 				</div>
 			</div>
 
-			<!-- Timeline Item 7 -->
-			<div class="timeline-item left" data-aos="fade-right">
+		<!-- Timeline Item 7 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#f05455" data-bg-mid="#f05455" data-bg-end="#f05455" data-accent="#f05455" data-brand="#f05455">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">July 2023</div>
-					<h3 class="timeline-title">Moving In Together</h3>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-7"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">January 2025</div>
+					<h3 class="timeline-title">Some more dates and the onset of unease</h3>
 					<p class="timeline-description">
-						Taking the next big step - combining our lives, our belongings, and our daily routines. Learning to share space and build a home together.
+						Charles please work thank you lord for working thank you
 					</p>
+					<img src="./images/timeline/IMG_4730.jpeg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+					</div>
 				</div>
 			</div>
 
 			<!-- Timeline Item 8 -->
-			<div class="timeline-item right" data-aos="fade-left">
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">August 2023</div>
-					<h3 class="timeline-title">First "I Love You"</h3>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-8"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">February 2025</div>
+					<h3 class="timeline-title">The Dark Days</h3>
 					<p class="timeline-description">
-						Those three little words that changed everything. The moment when what we felt finally had a name, and our hearts were completely open.
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
 					</p>
+					<img src="./images/timeline/IMG_4860.jpeg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
 				</div>
 			</div>
 
-			<!-- Timeline Item 9 -->
-			<div class="timeline-item left" data-aos="fade-right">
+		<!-- Timeline Item 9 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#f05455" data-bg-mid="#f05455" data-bg-end="#f05455" data-accent="#f05455" data-brand="#f05455">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">September 2023</div>
-					<h3 class="timeline-title">Overcoming Challenges</h3>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-9"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">March 2025</div>
+					<h3 class="timeline-title">Some more dates and the onset of unease</h3>
 					<p class="timeline-description">
-						Every relationship faces tests. This was ours - learning to communicate, to support each other, and to grow stronger together through difficult times.
+						Charles please work thank you lord for working thank you
 					</p>
+					<img src="./images/timeline/IMG_4730.jpeg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+					</div>
 				</div>
 			</div>
 
 			<!-- Timeline Item 10 -->
-			<div class="timeline-item right" data-aos="fade-left">
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">October 2023</div>
-					<h3 class="timeline-title">Halloween Fun</h3>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-10"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">April 2025</div>
+					<h3 class="timeline-title">The Dark Days</h3>
 					<p class="timeline-description">
-						Our first Halloween together - choosing costumes, trick-or-treating, and discovering we share the same silly sense of humor.
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
 					</p>
-					<img src="./images/halloween.jpg" alt="Halloween memories" class="timeline-image" />
+					<img src="./images/timeline/IMG_4860.jpeg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
 				</div>
 			</div>
 
-			<!-- Timeline Item 11 -->
-			<div class="timeline-item left" data-aos="fade-right">
+		<!-- Timeline Item 11 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#f05455" data-bg-mid="#f05455" data-bg-end="#f05455" data-accent="#f05455" data-brand="#f05455">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">November 2023</div>
-					<h3 class="timeline-title">Thanksgiving Together</h3>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-11"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">May 2025</div>
+					<h3 class="timeline-title">Some more dates and the onset of unease</h3>
 					<p class="timeline-description">
-						Sharing what we're grateful for - and realizing that having each other topped every list. A holiday filled with love, family, and new traditions.
+						Charles please work thank you lord for working thank you
 					</p>
+					<img src="./images/timeline/IMG_4730.jpeg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+					</div>
 				</div>
 			</div>
 
 			<!-- Timeline Item 12 -->
-			<div class="timeline-item right" data-aos="fade-left">
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">December 2023</div>
-					<h3 class="timeline-title">First Christmas</h3>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-12"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">June 2025</div>
+					<h3 class="timeline-title">The Dark Days</h3>
 					<p class="timeline-description">
-						The magic of our first Christmas together - gift shopping, decorating, and creating traditions that we'll carry forward for years to come.
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
 					</p>
+					<img src="./images/timeline/IMG_4860.jpeg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
 				</div>
 			</div>
 
-			<!-- Timeline Item 13 -->
-			<div class="timeline-item left" data-aos="fade-right">
+		<!-- Timeline Item 13 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#f05455" data-bg-mid="#f05455" data-bg-end="#f05455" data-accent="#f05455" data-brand="#f05455">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">January 2024</div>
-					<h3 class="timeline-title">One Year Anniversary</h3>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-13"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">July 2025</div>
+					<h3 class="timeline-title">Some more dates and the onset of unease</h3>
 					<p class="timeline-description">
-						Celebrating our first year together - looking back at how far we've come and forward to all the adventures that await us.
+						Charles please work thank you lord for working thank you
 					</p>
+					<img src="./images/timeline/IMG_4730.jpeg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+					</div>
 				</div>
 			</div>
 
 			<!-- Timeline Item 14 -->
-			<div class="timeline-item right" data-aos="fade-left">
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
 				<div class="timeline-marker"></div>
-				<div class="timeline-content">
-					<div class="timeline-date">Present Day</div>
-					<h3 class="timeline-title">Still Writing Our Story</h3>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-14"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">August 2025</div>
+					<h3 class="timeline-title">The Dark Days</h3>
 					<p class="timeline-description">
-						Here we are today - still learning, still growing, still falling more in love every day. Our timeline continues, and the best is yet to come.
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
 					</p>
-					<img src="./images/dancing.jpg" alt="Present day" class="timeline-image" />
+					<img src="./images/timeline/IMG_4860.jpeg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
 				</div>
 			</div>
 
-			<!-- Timeline Item 15: Future Surprise Date Night -->
+		<!-- Timeline Item 15 -->
+		  <!-- Example: this item overrides theme using explicit color attrs -->
+		  <div class="timeline-item left" data-aos="fade-right"
+			  data-bg-start="#f05455" data-bg-mid="#f05455" data-bg-end="#f05455" data-accent="#f05455" data-brand="#f05455">
+				<div class="timeline-marker"></div>
+			 <div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-11"
+				 data-expands-from
+				 aria-label="Open memory: Second Meeting">
+					<div class="timeline-date">September 2025</div>
+					<h3 class="timeline-title">Some more dates and the onset of unease</h3>
+					<p class="timeline-description">
+						Charles please work thank you lord for working thank you
+					</p>
+					<img src="./images/timeline/IMG_4730.jpeg" alt="First meeting" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+					</div>
+				</div>
+			</div>
+
+			<!-- Timeline Item 16 -->
+			<!-- Example: this item uses a named preset -->
+			<div class="timeline-item right" data-aos="fade-left" 			  
+				data-bg-start="#e23a56" data-bg-mid="#e23a56" data-bg-end="#e23a56" data-accent="#e23a56" data-brand="#e23a56">
+				<div class="timeline-marker"></div>
+				<div class="timeline-content cursor-pointer ring-1 ring-transparent hover:ring-amber-300/50 transition"
+				 role="button" tabindex="0"
+				 data-modal-open="memory-12"
+				 data-expands-from
+				 aria-label="Open memory: So Many Dates">
+					<div class="timeline-date">October 2025 and beyond</div>
+					<h3 class="timeline-title">The Dark Days</h3>
+					<p class="timeline-description">
+						I think a large part of our timeline was our saturday dates, so here is an entry for some of my favorites.
+					</p>
+					<img src="./images/timeline/IMG_4860.jpeg" alt="First date" class="timeline-image" />
+					<p class="mt-2 text-sm text-slate-500">Click to expand…</p>
+					<div class="timeline-extra" aria-hidden="true">
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Timeline Item 17: Future Surprise Date Night -->
 			<div class="timeline-item left" data-aos="fade-right" 
 			  data-bg-start="#b71616" data-bg-mid="#b71616" data-bg-end="#b71616" data-accent="#c71616" data-brand="#b71616">
 
@@ -593,8 +776,7 @@
 					</div>
 				</div>
 			</div>
-            <div class="timeline-arrow"></div>
-		</div>
+			<div class="timeline-arrow"></div>
 	</main>
 
 	<!-- Modal: Future Surprise Date Night -->
@@ -655,7 +837,7 @@
 									max-h-[85vh] overflow-y-auto
 									transform transition-transform duration-300 will-change-transform">
 				<div class="flex items-center justify-between px-6 py-4">
-					<h2 class="text-xl md:text-2xl font-extrabold text-slate-900">First Meeting</h2>
+					<h2 class="text-xl md:text-2xl font-extrabold text-[#b71616]">First Pier Talk</h2>
 					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
 						data-modal-close aria-label="Close">
 						✕
@@ -664,19 +846,19 @@
 
 				<div class="px-6 pb-6 space-y-4 text-slate-700">
 					<p class="text-slate-600">
-						A few more details from that night—little things we never want to forget.
+						The greatest two hour talk on the pier with a baking pan of my life.
 					</p>
 
 					<!-- media grid -->
 					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-						<img src="./images/first_date.jpg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
-						<img src="./images/5k.jpg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+						<img src="./images/timeline/2f4ebd47-2dc0-433a-b127-8270f28ced91.87c1ec48e772d8f4b7dc3497214d21cd.webp" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_8031.PNG" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
 					</div>
 
 					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
 						<h3 class="font-semibold" style="color: var(--accent); margin-bottom: .25rem;">Anecdote</h3>
 						<p style="color: rgba(31,41,55,0.9);">
-							We talked until the café lights dimmed, then walked outside just to keep the conversation going.
+							The first night I got a glance into what your world is like and I couldn't have been more enthralled. Truly what a magical night and who would have thought that it would have turned into such an amazing relationship and friendship.
 						</p>
 					</div>
 
@@ -703,7 +885,7 @@
 							max-h-[85vh] overflow-y-auto
 							transform transition-transform duration-300 will-change-transform">
 					<div class="flex items-center justify-between px-6 py-4">
-						<h2 class="text-xl md:text-2xl font-extrabold text-slate-900">First Date</h2>
+						<h2 class="text-xl md:text-2xl font-extrabold text-[var(--accent)]">First Date</h2>
 						<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
 							data-modal-close aria-label="Close">
 							✕
@@ -712,19 +894,19 @@
 
 					<div class="px-6 pb-6 space-y-4 text-slate-700">
 						<p class="text-slate-600">
-							A few more details from that night—little things we never want to forget.
+							Some of my thought from that day.
 						</p>
 
 						<!-- media grid -->
 						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-							<img src="./images/ice_cream_comedy_club.jpg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
-							<img src="./images/parking_garage.jpg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+							<img src="./images/timeline/IMG_1984.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4628.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
 						</div>
 
 						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
-							<h3 class="font-semibold" style="color: var(--accent); margin-bottom: .25rem;">Anecdote</h3>
+							<h3 class="font-semibold" style="color: var(--accent); margin-bottom: .25rem;">Some of my thoughts</h3>
 							<p style="color: rgba(31,41,55,0.9);">
-								We laughed over our shared dessert choices and traded stories about the worst meals we'd ever had.
+								Firstly, you looked absolutely stunning that day, and I couldn't believe that I was lucky enough to be seen in public with this beautiful women. Secondly, I remember being nervous that you wouldn't actually like me, and that I always had to watch what I was saying. But as the night went on, I felt more and more comfortable around you and it's something that I love so much about you. You have such a welcoming and warm personality that just soothes whoever you're interacting with. It makes every conversation with you so pleasant. Its something I really value about you <3
 							</p>
 						</div>
 
@@ -736,6 +918,709 @@
 				</div>
 			</div>
 		</div>
+
+	<!-- Modal: Third Meeting -->
+	<div id="memory-second-meeting" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#e13d1d]"
+					style="text-shadow: -0.5px -0.5px 0 #000,
+										0.5px -0.5px 0 #000,
+										-0.5px  0.5px 0 #000,
+										0.5px  0.5px 0 #000;">
+					Our Anniversary
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_2241.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4328.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#e13d1d; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<!-- Modal: So Many Dates -->
+		<div id="memory-so-many-dates" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/IMG_4391.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+	<!-- Modal: 5 entry -->
+	<div id="memory-5" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#f05455]">Some more dates and the onset of unease
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_6714.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4564.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#f05455; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Modal: 6 -->
+		<div id="memory-6" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/Facetune_21-12-2024-01-37-26.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<!-- Modal: 7 entry -->
+	<div id="memory-7" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#f05455]">Some more dates and the onset of unease
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_6714.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4564.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#f05455; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Modal: 8 -->
+		<div id="memory-8" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/Facetune_21-12-2024-01-37-26.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- Modal: 9 entry -->
+	<div id="memory-9" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#f05455]">Some more dates and the onset of unease
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_6714.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4564.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#f05455; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Modal: 10 -->
+		<div id="memory-10" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/Facetune_21-12-2024-01-37-26.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- Modal: 11 entry -->
+	<div id="memory-11" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#f05455]">Some more dates and the onset of unease
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_6714.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4564.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#f05455; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Modal: 12 -->
+		<div id="memory-12" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/Facetune_21-12-2024-01-37-26.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- Modal: 13 entry -->
+	<div id="memory-13" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#f05455]">Some more dates and the onset of unease
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_6714.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4564.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#f05455; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Modal: 14 -->
+		<div id="memory-14" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/Facetune_21-12-2024-01-37-26.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- Modal: 15 entry -->
+	<div id="memory-15" class="fixed inset-0 z-50 hidden">
+		<!-- overlay -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+		<!-- panel -->
+		<!-- Bottom sheet on mobile; centered panel on md+ -->
+		<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+			<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+									rounded-t-2xl md:rounded-2xl
+									w-full md:w-auto
+									max-h-[85vh] overflow-y-auto
+									transform transition-transform duration-300 will-change-transform">
+				<div class="flex items-center justify-between px-6 py-4">
+					<h2 
+					class="text-xl md:text-2xl font-extrabold text-[#f05455]">Some more dates and the onset of unease
+					</h2>
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+						data-modal-close aria-label="Close">
+						✕
+					</button>
+				</div>
+
+				<div class="px-6 pb-6 space-y-4 text-slate-700">
+					<p class="text-slate-600">
+						From a random dog that almost ruined the day to a impromptu UNIQLO shopping trip, it was the day I was 100% positive I wanted to ask you out.
+					</p>
+
+					<!-- media grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<img src="./images/timeline/IMG_6714.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 1">
+						<img src="./images/timeline/IMG_4564.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First meeting 2">
+					</div>
+
+					<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+						<h3 class="font-semibold" style="color:#f05455; margin-bottom: .25rem;">Some of my thoughts from that day</h3>
+						<p style="color: rgba(31,41,55,0.9);">
+							Insert thoughts here 
+						</p>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-2">
+						<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+							data-modal-close>Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- Modal: 16 -->
+		<div id="memory-16" class="fixed inset-0 z-50 hidden">
+			<!-- overlay -->
+			<div class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop" data-modal-close></div>
+
+			<!-- panel -->
+			<div class="absolute inset-x-0 bottom-0 md:static md:mx-auto md:mt-24 w-full md:max-w-3xl px-0 md:px-4">
+				<div data-panel
+					 class="bg-white/90 backdrop-blur-xl shadow-2xl ring-1 ring-white/60
+							rounded-t-2xl md:rounded-2xl
+							w-full md:w-auto
+							max-h-[85vh] overflow-y-auto
+							transform transition-transform duration-300 will-change-transform">
+					<div class="flex items-center justify-between px-6 py-4">
+						<h2 class="text-xl md:text-2xl font-extrabold text-[#e23a56]">So Many Dates</h2>					
+					<button class="inline-flex items-center justify-center rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100"
+							data-modal-close aria-label="Close">
+							✕
+						</button>
+					</div>
+
+					<div class="px-6 pb-6 space-y-4 text-slate-700">
+						<p class="text-slate-600">
+							Some of my thought from that day.
+						</p>
+
+						<!-- media grid -->
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<img src="./images/timeline/Facetune_21-12-2024-01-37-26.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 1">
+							<img src="./images/timeline/IMG_4455.jpeg" class="w-full h-56 object-cover rounded-xl" alt="First date 2">
+						</div>
+
+						<div class="rounded-xl p-4" style="background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(239,68,68,0.04), rgba(245,158,11,0.04)); border: 1px solid rgba(255,255,255,0.6);">
+							<h3 class="font-semibold" style="color:#e23a56; margin-bottom: .25rem;">Some of my thoughts</h3>
+							<p style="color: rgba(31,41,55,0.9);">
+								THOGUHTS
+							</p>
+						</div>
+
+						<div class="flex justify-end gap-3 pt-2">
+							<button class="rounded-xl px-4 py-2 bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+								data-modal-close>Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- Scripts (match index.html for AOS) -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
