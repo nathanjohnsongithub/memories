@@ -190,14 +190,25 @@
 		/* Inline expansion area for each timeline card */
 		.timeline-extra {
 			max-height: 0;
+			opacity: 0;
+			transform: translateY(10px);
 			overflow: hidden;
-			transition: max-height 0.35s ease, padding 0.25s ease;
+			pointer-events: none;
+			transition:
+				max-height 0.45s cubic-bezier(.22,1,.36,1),
+				padding 0.3s ease,
+				opacity 0.32s ease,
+				transform 0.45s cubic-bezier(.22,1,.36,1);
 			padding-top: 0;
+			will-change: max-height, opacity, transform;
 		}
 
 		.timeline-item.expanded .timeline-extra {
 			max-height: 1200px; /* large enough to reveal content */
 			padding-top: 16px;
+			opacity: 1;
+			transform: translateY(0);
+			pointer-events: auto;
 		}
 
 		.timeline-content::before {
@@ -272,6 +283,11 @@
 	backface-visibility: hidden;
 	transform-style: preserve-3d;
 	-webkit-font-smoothing: antialiased;
+	background: rgba(255, 255, 255, 0.85);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 		@media (max-width: 480px) {
 			.timeline-container { padding: 16px 12px; }
