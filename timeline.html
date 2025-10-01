@@ -189,22 +189,22 @@
 
 		/* Inline expansion area for each timeline card */
 		.timeline-extra {
-			max-height: 0;
+			--extra-expanded-height: 0px;
+			max-height: var(--extra-expanded-height);
 			opacity: 0;
 			transform: translateY(10px);
 			overflow: hidden;
 			pointer-events: none;
 			transition:
-				max-height 0.45s cubic-bezier(.22,1,.36,1),
-				padding 0.3s ease,
-				opacity 0.32s ease,
-				transform 0.45s cubic-bezier(.22,1,.36,1);
+				max-height 0.5s cubic-bezier(.24,1,.32,1),
+				padding 0.32s ease,
+				opacity 0.34s ease,
+				transform 0.5s cubic-bezier(.24,1,.32,1);
 			padding-top: 0;
 			will-change: max-height, opacity, transform;
 		}
 
 		.timeline-item.expanded .timeline-extra {
-			max-height: 1200px; /* large enough to reveal content */
 			padding-top: 16px;
 			opacity: 1;
 			transform: translateY(0);
@@ -1685,24 +1685,65 @@
 			// ensure hidden initially
 			extra.setAttribute('aria-hidden', 'true');
 
-			const toggle = (e) => {
-				const isExpanded = item.classList.toggle('expanded');
-				extra.setAttribute('aria-hidden', (!isExpanded).toString());
+			const setExpandedHeight = () => {
+				const measured = extra.scrollHeight;
+				extra.style.setProperty('--extra-expanded-height', `${measured}px`);
+			};
+
+			const expand = () => {
+				item.classList.add('expanded');
+				extra.setAttribute('aria-hidden', 'false');
+				requestAnimationFrame(() => {
+					setExpandedHeight();
+				});
+			};
+
+			const collapse = () => {
+				setExpandedHeight();
+				requestAnimationFrame(() => {
+					item.classList.remove('expanded');
+					extra.setAttribute('aria-hidden', 'true');
+					requestAnimationFrame(() => {
+						if (!item.classList.contains('expanded')) {
+							extra.style.setProperty('--extra-expanded-height', '0px');
+						}
+					});
+				});
+			};
+
+			if ('ResizeObserver' in window) {
+				const observer = new ResizeObserver(() => {
+					if (item.classList.contains('expanded')) setExpandedHeight();
+				});
+				observer.observe(extra);
+			}
+
+			extra.addEventListener('transitionend', (event) => {
+				if (event.target !== extra) return;
+				if (event.propertyName === 'max-height' && !item.classList.contains('expanded')) {
+					extra.style.removeProperty('--extra-expanded-height');
+				}
+			});
+
+			const toggle = () => {
+				if (trigger.hasAttribute('data-modal-open')) return;
+				if (item.classList.contains('expanded')) {
+					collapse();
+				} else {
+					expand();
+				}
 			};
 
 			trigger.addEventListener('click', (e) => {
 				// prevent double-activation when clicking a focused form control inside
 				if (e.target.closest('a,button')) return;
-				// If this trigger also opens a modal, don't expand inline — let the modal handle the popout.
-				if (trigger.hasAttribute('data-modal-open')) return;
-				toggle(e);
+				toggle();
 			});
 
 			trigger.addEventListener('keydown', (e) => {
 				if (e.key === 'Enter' || e.key === ' ') {
 					e.preventDefault();
-					if (trigger.hasAttribute('data-modal-open')) return;
-					toggle(e);
+					toggle();
 				}
 			});
 		});
@@ -1727,6 +1768,9 @@
 	      if (lockedPreview && item && extra && !item.classList.contains('expanded')) {
 	        item.classList.add('expanded');
 	        extra.setAttribute('aria-hidden', 'false');
+	        requestAnimationFrame(() => {
+	          extra.style.setProperty('--extra-expanded-height', `${extra.scrollHeight}px`);
+	        });
 	        return; // stop here; next click will open the modal
 	      }
 
@@ -1808,7 +1852,7 @@
 				// Use a double RAF to ensure the initial transform is flushed to the compositor
 				// before we enable the transition. Increase duration and use a smoother ease-out curve.
 				requestAnimationFrame(() => requestAnimationFrame(() => {
-					panel.style.transition = 'transform 480ms cubic-bezier(.22,1,.36,1)';
+					panel.style.transition = 'transform 460ms cubic-bezier(.22,1,.36,1)';
 					panel.style.transform = '';
 				}));
 
@@ -1876,14 +1920,17 @@
 			clone.style.transition = 'none';
 			clone.getBoundingClientRect();
 
+			clone.style.opacity = '1';
+
 			// Animate the clone to the card (reverse FLIP)
 			requestAnimationFrame(() => requestAnimationFrame(() => {
-				clone.style.transition = 'transform 420ms cubic-bezier(.22,1,.36,1), opacity 260ms ease';
+				clone.style.transition = 'transform 380ms cubic-bezier(.22,1,.36,1), opacity 360ms cubic-bezier(.24,0,.38,1)';
 				clone.style.transform = `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
-				clone.style.opacity = '1';
+				clone.style.opacity = '0';
 			}));
 
-			clone.addEventListener('transitionend', () => {
+			clone.addEventListener('transitionend', (event) => {
+				if (event.propertyName !== 'transform') return;
 				// remove clone and restore focus
 				clone.remove();
 				trigger?.focus();
