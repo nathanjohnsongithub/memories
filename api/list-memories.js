@@ -1,11 +1,12 @@
 const crypto = require('crypto');
+const { readSessionFromCookies } = require('../lib/session');
 
 module.exports = async (req, res) => {
   if (req.method !== 'GET') return res.status(405).end();
 
-  // simple cookie check set by verify-password
-  const cookie = req.headers.cookie || '';
-  if (!cookie.includes('mem_auth=1')) return res.status(401).json({ error: 'not authenticated' });
+  // verify signed session cookie
+  const session = readSessionFromCookies(req.headers.cookie || '');
+  if (!session) return res.status(401).json({ error: 'not authenticated' });
 
   try {
     const SUPABASE_URL = process.env.SUPABASE_URL;

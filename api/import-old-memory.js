@@ -1,19 +1,72 @@
 const crypto = require('crypto');
+const { readSessionFromCookies } = require('../lib/session');
 
 function bufferFromBase64(b64) {
   return Buffer.from(b64, 'base64');
 }
 
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024; // 5MB per upload
+const IMPORT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_IMPORTS_PER_WINDOW = 12;
+const importStore = new Map(); // key by ip
+
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) {
+    const ip = forwarded.split(',')[0]?.trim();
+    if (ip) return ip;
+  }
+  return req.socket?.remoteAddress || 'unknown';
+}
+
+function registerImport(ip) {
+  if (!ip) return;
+  const now = Date.now();
+  const entry = importStore.get(ip) || { count: 0, first: now };
+  if (now - entry.first > IMPORT_WINDOW_MS) {
+    entry.count = 0;
+    entry.first = now;
+  }
+  entry.count += 1;
+  importStore.set(ip, entry);
+  return entry.count;
+}
+
+function isImportRateLimited(ip) {
+  const entry = importStore.get(ip);
+  if (!entry) return false;
+  if (Date.now() - entry.first > IMPORT_WINDOW_MS) {
+    importStore.delete(ip);
+    return false;
+  }
+  return entry.count >= MAX_IMPORTS_PER_WINDOW;
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end();
 
-  // simple cookie check set by verify-password
-  const cookie = req.headers.cookie || '';
-  if (!cookie.includes('mem_auth=1')) return res.status(401).json({ error: 'not authenticated' });
+  // validate session cookie
+  const session = readSessionFromCookies(req.headers.cookie || '');
+  if (!session) return res.status(401).json({ error: 'not authenticated' });
+
+  const clientIp = getClientIp(req);
+  if (isImportRateLimited(clientIp)) {
+    return res.status(429).json({ error: 'Too many uploads, please slow down' });
+  }
 
   try {
   const { title, note, taken_at, is_private, imageBase64, filename, attribution_name } = req.body || {};
     if (!imageBase64) return res.status(400).json({ error: 'image required' });
+
+    if (typeof imageBase64 !== 'string' || !/^data:[^;]+;base64,/.test(imageBase64)) {
+      return res.status(400).json({ error: 'invalid image payload' });
+    }
+
+    if (imageBase64.length > MAX_UPLOAD_BYTES * 1.37) {
+      return res.status(413).json({ error: 'upload too large' });
+    }
+
+    registerImport(clientIp);
 
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -26,6 +79,12 @@ module.exports = async (req, res) => {
     // Upload to storage via Supabase REST
   // strip data:<mime>;base64, prefix if present. Accept any mime type token.
   const fileBuf = bufferFromBase64(imageBase64.replace(/^data:[^;]+;base64,/, ''));
+    if (!fileBuf.length) {
+      return res.status(400).json({ error: 'empty image payload' });
+    }
+    if (fileBuf.length > MAX_UPLOAD_BYTES) {
+      return res.status(413).json({ error: 'upload too large' });
+    }
     const remotePath = `${crypto.randomBytes(8).toString('hex')}-${filename || 'upload.jpg'}`;
 
     const uploadUrl = `${SUPABASE_URL}/storage/v1/object/memories/${encodeURIComponent(remotePath)}`;

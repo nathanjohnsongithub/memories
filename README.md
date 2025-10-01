@@ -28,6 +28,7 @@ Files added
 - `api/import-old-memory.js` - POST {title,note,taken_at,imageBase64,filename} → uploads to Supabase storage and inserts row in `public.memories` using the service role key.
 - `make_hash.js` - helper to generate salt+hash.
 - `.env.example` - env variables list.
+- `lib/session.js` / `api/session-check.js` - signed session cookies used by the password gate and checked by the front-end guard.
 
 Env vars required (set these locally and in Vercel):
 
@@ -36,6 +37,7 @@ Env vars required (set these locally and in Vercel):
 - IMPORTER_USER_ID           (UUID for created_by field)
 - OLD_MEM_PW_SALT            (base64 from make_hash.js)
 - OLD_MEM_PW_HASH            (base64 from make_hash.js)
+- SESSION_SECRET             (random 32+ char string for signing session cookies)
 - NEXT_PUBLIC_SUPABASE_URL
 - NEXT_PUBLIC_SUPABASE_ANON_KEY
 

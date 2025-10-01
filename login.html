@@ -24,12 +24,16 @@
 
   <script>
     // If already authenticated, bounce to return or default
-    (function(){
-      const has = document.cookie.split(';').some(c=>c.trim().startsWith('mem_auth_mark='));
-      if (has) {
-        const params = new URLSearchParams(location.search);
-        const ret = params.get('return');
-        location.replace(ret ? decodeURIComponent(ret) : '/index.html');
+    (async function(){
+      try {
+        const res = await fetch('/api/session-check', { method: 'GET', credentials: 'include', cache: 'no-store' });
+        if (res.ok) {
+          const params = new URLSearchParams(location.search);
+          const ret = params.get('return');
+          location.replace(ret ? decodeURIComponent(ret) : '/index.html');
+        }
+      } catch (err) {
+        // ignore and continue showing form
       }
     })();
 
