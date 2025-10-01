@@ -11,14 +11,53 @@
   <meta name="apple-mobile-web-app-title" content="Our Scrapbook" />
   <link rel="manifest" href="favicon/site.webmanifest" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-start: #face95;
+      --bg-end: #f0dba6;
+      --brand: #f8c788;
+    }
+
+    body {
+      background:
+        radial-gradient(1600px 2500px at 10% 0%, var(--bg-start) 0%, transparent 50%),
+        radial-gradient(1600px 2500px at 90% 10%, var(--bg-end) 0%, transparent 55%),
+        linear-gradient(180deg, #ffffff 6%, #fafbff 100%);
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .015 .03 0 0 0'/></feComponentTransfer></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+      background-size: 300px 300px;
+      opacity: .35;
+      mix-blend-mode: multiply;
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-lg shadow p-6 w-full max-w-md">
-    <h1 class="text-2xl font-semibold mb-4 text-center">Please enter the secret password to view our scrapbook</h1>
-    <div class="space-y-3">
-      <input id="pw" type="password" class="w-full rounded border px-3 py-2" placeholder="Password" />
-      <button id="go" class="w-full px-4 py-2 bg-sky-600 text-white rounded">Continue</button>
-      <p id="err" class="text-red-600 hidden"></p>
+<body class="relative min-h-screen">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-28 h-72 bg-gradient-to-r from-orange-200 via-amber-200 to-yellow-200 blur-3xl opacity-60"></div>
+
+  <div class="relative z-10 flex min-h-screen items-center justify-center px-6 py-16">
+    <div class="backdrop-blur-md bg-white/60 rounded-2xl shadow-[0_20px_60px_rgba(15,23,42,0.10)] ring-1 ring-white/70 w-full max-w-md">
+      <div class="px-8 py-10 text-center space-y-6">
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Enter the Super Secret Password</h1>
+          <p class="mt-2 text-sm text-slate-600">This keeps our scrapbook safe from hackers!</p>
+        </div>
+
+        <div class="space-y-4">
+          <input id="pw" type="password" class="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-slate-700 shadow-sm focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/60" placeholder="Password" autocomplete="current-password" />
+          <button id="go" class="w-full inline-flex justify-center rounded-xl bg-[var(--brand)] px-4 py-3 text-sm font-semibold text-slate-800 shadow-[0_12px_30px_rgba(248,199,136,0.45)] transition hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--brand)]">Continue to Memories</button>
+          <p id="err" class="hidden text-sm text-rose-500"></p>
+        </div>
+      </div>
     </div>
   </div>
 
