@@ -17,11 +17,21 @@
 	<script src="/auth-guard.js"></script>
 	<style>
 		.memory {
+			position: relative;
+			overflow: hidden;
 			transition: all 0.3s ease-in-out;
 			transform-origin: center;
 		}
 
 		.memory-overlay {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			pointer-events: none;
+			z-index: 2;
 			opacity: 0;
 			visibility: hidden;
 			transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
@@ -58,6 +68,17 @@
 			margin-right: auto;
 		}
 
+		.memory .attribution-overlay {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: flex-end;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.3s ease-in-out;
+			z-index: 3;
+		}
+
 		@media (hover: hover) and (pointer: fine) {
 			.memory[data-aos].aos-animate:hover {
 				transform: translate3d(0, 0, 0) scale(1.05) !important;
@@ -67,6 +88,11 @@
 			.memory:hover .memory-overlay {
 				opacity: 1;
 				visibility: visible;
+			}
+
+			.memory:hover .attribution-overlay,
+			.memory:focus-within .attribution-overlay {
+				opacity: 1;
 			}
 
 			.memory:hover img {
