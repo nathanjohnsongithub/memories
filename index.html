@@ -29,6 +29,7 @@
 			background: transparent;
 			/* Optional: give gradients a bit more punch with blend modes */
 			/* mix-blend-mode: multiply; */
+			padding: clamp(1rem, 4vw, 2.5rem);
 		}
 
 		.memory-overlay.active {
@@ -42,6 +43,19 @@
 
 		.memory.active img {
 			filter: brightness(0.7);
+		}
+
+		.memory-overlay h3 {
+			font-size: clamp(1.2rem, 4.6vw, 1.8rem);
+			line-height: 1.35;
+		}
+
+		.memory-overlay p {
+			font-size: clamp(1rem, 4vw, 1.3rem);
+			line-height: 1.55;
+			max-width: 40ch;
+			margin-left: auto;
+			margin-right: auto;
 		}
 
 		@media (hover: hover) and (pointer: fine) {
@@ -82,6 +96,11 @@
 			min-height: 300px;
 			will-change: transform, box-shadow;
 			position: relative;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
 		}
 
 		.add-memory-card:hover {
@@ -100,6 +119,8 @@
 			backdrop-filter: blur(14px);
 			box-shadow: 0 20px 60px rgba(59,130,246,0.12);
 			z-index: 30;
+			align-items: stretch;
+			justify-content: flex-start;
 		}
 
 		@media (max-width: 768px) {
@@ -111,8 +132,32 @@
 			}
 		}
 
+		@media (max-width: 640px) {
+			.add-memory-card {
+				min-height: 220px;
+				padding: 1.5rem;
+			}
+
+			.add-memory-content p {
+				font-size: 0.95rem;
+			}
+		}
+
 		.add-memory-content {
 			transition: opacity 220ms ease-in-out, transform 260ms ease-in-out;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			width: 100%;
+		}
+
+		.add-memory-content p {
+			max-width: 26ch;
+			margin-left: auto;
+			margin-right: auto;
+			line-height: 1.45;
 		}
 
 		/* Use transform + opacity for the form reveal for smoother, compositor-driven animation */
@@ -123,6 +168,10 @@
 			overflow: hidden;
 			transition: opacity 300ms ease, transform 300ms cubic-bezier(.22,1,.36,1), height 320ms ease;
 			pointer-events: none;
+		}
+
+		.add-memory-card.expanded .add-memory-form {
+			width: 100%;
 		}
 
 		/* Loading bar for add-memory interactions */
