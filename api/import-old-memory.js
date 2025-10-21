@@ -5,7 +5,7 @@ function bufferFromBase64(b64) {
   return Buffer.from(b64, 'base64');
 }
 
-const MAX_UPLOAD_BYTES = 5 * 1024 * 1024; // 5MB per upload
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10MB per upload
 const IMPORT_WINDOW_MS = 60 * 1000; // 1 minute
 const MAX_IMPORTS_PER_WINDOW = 12;
 const importStore = new Map(); // key by ip

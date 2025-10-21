@@ -294,6 +294,143 @@
 
 		/* Attribution overlay visibility when card is active on mobile */
 		.memory.active .attribution-overlay { opacity: 1; }
+
+		/* Date reminder modal styling */
+		.date-reminder-overlay {
+			position: fixed;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 1.5rem;
+			background: rgba(15, 23, 42, 0.45);
+			backdrop-filter: blur(6px);
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 220ms ease, visibility 220ms ease;
+			z-index: 50;
+		}
+
+		.date-reminder-overlay.visible {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.date-reminder-card {
+			position: relative;
+			max-width: 28rem;
+			width: 100%;
+			border-radius: 1.75rem;
+			background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 248, 235, 0.96));
+			border: 1px solid rgba(255, 255, 255, 0.7);
+			box-shadow: 0 26px 70px rgba(248, 180, 80, 0.28);
+			padding: 2.75rem 2.5rem 2.25rem;
+			transform: translateY(12px) scale(0.98);
+			opacity: 0;
+			transition: transform 240ms cubic-bezier(.22,1,.36,1), opacity 240ms ease;
+		}
+
+		.date-reminder-overlay.visible .date-reminder-card {
+			transform: translateY(0) scale(1);
+			opacity: 1;
+		}
+
+		.date-reminder-pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.35rem;
+			padding: 0.35rem 0.85rem;
+			border-radius: 9999px;
+			background: rgba(248, 180, 80, 0.18);
+			color: #b45309;
+			font-size: 0.75rem;
+			font-weight: 600;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			margin-bottom: 1.2rem;
+		}
+
+		.date-reminder-pill::before {
+			content: "🚨";
+			font-size: 0.9rem;
+		}
+
+		.date-reminder-card h2 {
+			font-size: clamp(1.6rem, 2.6vw, 2rem);
+			font-weight: 700;
+			color: #0f172a;
+			line-height: 1.2;
+			margin-bottom: 0.9rem;
+		}
+
+		.date-reminder-card p {
+			color: #475569;
+			line-height: 1.6;
+		}
+
+		.date-reminder-cta {
+			margin-top: 1.9rem;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			padding: 0.85rem 1.8rem;
+			border-radius: 9999px;
+			background: linear-gradient(90deg, var(--tl-bg-start) 0%, var(--tl-bg-end) 100%);
+			color: #ffffff;
+			font-size: 1rem;
+			font-weight: 600;
+			box-shadow: 0 16px 44px rgba(245, 158, 11, 0.28);
+			border: 0;
+			cursor: pointer;
+			transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+		}
+
+		.date-reminder-cta:hover {
+			transform: translateY(-2px);
+			filter: brightness(1.04);
+			box-shadow: 0 20px 54px rgba(245, 158, 11, 0.32);
+		}
+
+		.date-reminder-cta:focus-visible {
+			outline: 3px solid rgba(251, 191, 36, 0.55);
+			outline-offset: 4px;
+		}
+
+		.date-reminder-close {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			border: 1px solid rgba(148, 163, 184, 0.35);
+			border-radius: 9999px;
+			background: rgba(255, 255, 255, 0.8);
+			color: #334155;
+			font-size: 0.82rem;
+			font-weight: 600;
+			padding: 0.35rem 0.85rem;
+			cursor: pointer;
+			transition: background 160ms ease, transform 160ms ease;
+		}
+
+		.date-reminder-close:hover {
+			background: rgba(255, 255, 255, 1);
+			transform: translateY(-1px);
+		}
+
+		.date-reminder-close:focus-visible {
+			outline: 3px solid rgba(56, 189, 248, 0.4);
+			outline-offset: 3px;
+		}
+
+		@media (max-width: 520px) {
+			.date-reminder-card {
+				padding: 2.25rem 1.75rem 1.9rem;
+			}
+
+			.date-reminder-card h2 {
+				font-size: 1.55rem;
+			}
+		}
 	</style>
 </head>
 
@@ -334,6 +471,16 @@
 			</div>
 		</div>
 	</header>
+
+	<div id="date-reminder-overlay" class="date-reminder-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="date-reminder-title">
+		<div class="date-reminder-card">
+			<button type="button" class="date-reminder-close" id="date-reminder-close">Close</button>
+			<span class="date-reminder-pill">Reminder</span>
+			<h2 id="date-reminder-title">Tapas cooking and Spanish dancing date is this Friday!!!!</h2>
+			<p>We have our Tapas Cooking and Spanish Dancing that I got for our one year anniversary this Friday the 24th at 7:00 PM. Hopefully you will have the love in your heart to join me, or else I'll have to go with Ross or something because they ARE NOT refundable</p>
+			<button type="button" class="date-reminder-cta" id="date-reminder-cta">Yay! Can't wait!</button>
+		</div>
+	</div>
 
 	<!-- Filters -->
 	<div class="mx-auto max-w-5xl px-6 -mt-4">
@@ -393,6 +540,65 @@
 			const overlay = memory.querySelector('.memory-overlay');
 			if (overlay) {
 				overlay.classList.remove('active');
+			}
+		}
+
+		function setupDateReminder() {
+			const overlay = document.getElementById('date-reminder-overlay');
+			if (!overlay) return;
+			const closeBtn = document.getElementById('date-reminder-close');
+			const ctaBtn = document.getElementById('date-reminder-cta');
+
+			const setHiddenState = (isHidden) => {
+				overlay.setAttribute('aria-hidden', String(isHidden));
+			};
+
+			function hideReminder() {
+				if (!overlay.classList.contains('visible')) return;
+				overlay.classList.remove('visible');
+				setHiddenState(true);
+				document.removeEventListener('keydown', onKeyDown);
+			}
+
+			function onKeyDown(event) {
+				if (event.key === 'Escape') {
+					hideReminder();
+				}
+			}
+
+			function showReminder() {
+				overlay.classList.add('visible');
+				setHiddenState(false);
+				document.addEventListener('keydown', onKeyDown);
+				if (ctaBtn && typeof ctaBtn.focus === 'function') {
+					setTimeout(() => {
+						try { ctaBtn.focus({ preventScroll: true }); } catch (_) { ctaBtn.focus(); }
+					}, 200);
+				}
+			}
+
+			closeBtn?.addEventListener('click', hideReminder);
+			ctaBtn?.addEventListener('click', hideReminder);
+			overlay.addEventListener('click', (event) => {
+				if (event.target === overlay) {
+					hideReminder();
+				}
+			});
+
+			let hasShown = false;
+			try {
+				hasShown = sessionStorage.getItem('dateReminderShown') === '1';
+			} catch (_) {
+				hasShown = false;
+			}
+
+			if (!hasShown) {
+				setTimeout(() => {
+					showReminder();
+					try {
+						sessionStorage.setItem('dateReminderShown', '1');
+					} catch (_) { /* ignore */ }
+				}, 450);
 			}
 		}
 
@@ -531,6 +737,7 @@
 
 		document.addEventListener('DOMContentLoaded', function () {
 			initializeMemoryInteractions();
+			setupDateReminder();
 		});
 
 		(function () {
