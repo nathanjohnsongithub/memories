@@ -118,8 +118,10 @@ module.exports = async (req, res) => {
     if (!upRes.ok) {
       const txt = await upRes.text();
       console.error('upload failed', upRes.status, txt);
-      const msg = upRes.status === 413 ? 'upload too large (storage)' : 'upload failed';
-      return res.status(500).json({ error: msg, status: upRes.status, detail: txt });
+      if (upRes.status === 413) {
+        return res.status(413).json({ error: 'upload too large (storage)', status: 413, detail: txt });
+      }
+      return res.status(502).json({ error: 'upload failed', status: upRes.status, detail: txt });
     }
 
     // get public url
