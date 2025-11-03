@@ -77,7 +77,9 @@ module.exports = async (req, res) => {
     }
 
     // Upload to storage via Supabase REST
-  // strip data:<mime>;base64, prefix if present. Accept any mime type token.
+  // Parse mime from data URL and strip prefix
+  const mimeMatch = imageBase64.match(/^data:([^;]+);base64,/);
+  const mimeType = mimeMatch ? mimeMatch[1] : 'application/octet-stream';
   const fileBuf = bufferFromBase64(imageBase64.replace(/^data:[^;]+;base64,/, ''));
     if (!fileBuf.length) {
       return res.status(400).json({ error: 'empty image payload' });
@@ -85,7 +87,15 @@ module.exports = async (req, res) => {
     if (fileBuf.length > MAX_UPLOAD_BYTES) {
       return res.status(413).json({ error: 'upload too large' });
     }
-    const remotePath = `${crypto.randomBytes(8).toString('hex')}-${filename || 'upload.jpg'}`;
+    // Normalize extension based on mime when possible
+    function extFromMime(mt){
+      const map = { 'image/jpeg':'jpg', 'image/png':'png', 'image/webp':'webp', 'image/gif':'gif', 'image/heic':'heic', 'image/heif':'heif', 'image/avif':'avif' };
+      return map[mt] || (filename?.split('.').pop() || 'bin');
+    }
+    const safeName = (filename || 'upload').replace(/[^a-zA-Z0-9._-]+/g, '_');
+    const ext = extFromMime(mimeType);
+    const base = safeName.replace(/\.[^.]+$/, '');
+    const remotePath = `${crypto.randomBytes(8).toString('hex')}-${base}.${ext}`;
 
     const uploadUrl = `${SUPABASE_URL}/storage/v1/object/memories/${encodeURIComponent(remotePath)}`;
     let upRes;
@@ -95,7 +105,7 @@ module.exports = async (req, res) => {
         headers: {
           Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
           apikey: SUPABASE_SERVICE_ROLE_KEY,
-          'Content-Type': 'application/octet-stream',
+          'Content-Type': mimeType || 'application/octet-stream',
           'x-upsert': 'false'
         },
         body: fileBuf
@@ -108,7 +118,8 @@ module.exports = async (req, res) => {
     if (!upRes.ok) {
       const txt = await upRes.text();
       console.error('upload failed', upRes.status, txt);
-      return res.status(500).json({ error: 'upload failed', status: upRes.status, detail: txt });
+      const msg = upRes.status === 413 ? 'upload too large (storage)' : 'upload failed';
+      return res.status(500).json({ error: msg, status: upRes.status, detail: txt });
     }
 
     // get public url

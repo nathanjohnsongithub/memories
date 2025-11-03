@@ -14,6 +14,8 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+	<!-- HEIC/HEIF conversion library for iPhone photos -->
+	<script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
 	<script src="/auth-guard.js"></script>
 	<style>
 		.memory {
@@ -741,6 +743,83 @@
 		});
 
 		(function () {
+			// ---- Client-side image pipeline helpers ----
+			const TEN_MB = 10 * 1024 * 1024;
+			const ACCEPTED_TYPES = ['image/jpeg','image/png','image/webp','image/gif','image/heic','image/heif','image/avif'];
+
+			function getExtFromMime(mime){
+				if (!mime) return 'jpg';
+				const map = { 'image/jpeg':'jpg', 'image/png':'png', 'image/webp':'webp', 'image/gif':'gif', 'image/heic':'heic', 'image/heif':'heif', 'image/avif':'avif' };
+				return map[mime] || 'jpg';
+			}
+
+			function readFileAsDataURL(file){
+				return new Promise((resolve, reject) => {
+					const fr = new FileReader();
+					fr.onerror = () => reject(new Error('Failed to read file'));
+					fr.onload = () => resolve(fr.result);
+					fr.readAsDataURL(file);
+				});
+			}
+
+			async function heicToJpegIfNeeded(file) {
+				const type = (file.type || '').toLowerCase();
+				const nameLC = (file.name || '').toLowerCase();
+				const looksHeic = type.includes('heic') || type.includes('heif') || nameLC.endsWith('.heic') || nameLC.endsWith('.heif');
+				if (!looksHeic) return file;
+				if (typeof window.heic2any !== 'function') return file; // fallback if library not loaded
+				try {
+					const blob = await window.heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+					return new File([blob], (file.name || 'image').replace(/\.(heic|heif)$/i, '.jpg'), { type: 'image/jpeg' });
+				} catch (e) {
+					console.warn('HEIC convert failed, continuing with original', e);
+					return file;
+				}
+			}
+
+			function drawToCanvas(img, maxW, maxH){
+				const w = img.naturalWidth, h = img.naturalHeight;
+				let targetW = w, targetH = h;
+				if (w > maxW || h > maxH){
+					const scale = Math.min(maxW / w, maxH / h);
+					targetW = Math.round(w * scale);
+					targetH = Math.round(h * scale);
+				}
+				const canvas = document.createElement('canvas');
+				canvas.width = targetW; canvas.height = targetH;
+				const ctx = canvas.getContext('2d');
+				ctx.drawImage(img, 0, 0, targetW, targetH);
+				return canvas;
+			}
+
+			async function compressImageToTarget(file, opts={}){
+				// Attempt to keep under 10MB, default to JPEG
+				const { maxBytes=TEN_MB, maxWidth=4096, maxHeight=4096, mime='image/jpeg' } = opts;
+				const dataUrl = await readFileAsDataURL(file);
+				const img = await new Promise((resolve, reject) => {
+					const i = new Image();
+					i.onload = () => resolve(i);
+					i.onerror = () => reject(new Error('Image decode failed'));
+					i.src = dataUrl;
+				});
+				const canvas = drawToCanvas(img, maxWidth, maxHeight);
+				// Binary search quality
+				let low = 0.5, high = 0.95, bestBlob = null;
+				for (let iter=0; iter<6; iter++){
+					const q = (low+high)/2;
+					const blob = await new Promise(res => canvas.toBlob(res, mime, q));
+					if (!blob) break;
+					if (blob.size <= maxBytes){
+						bestBlob = blob; low = q; // can afford more quality
+					} else {
+						high = q; // need less quality
+					}
+				}
+				const finalBlob = bestBlob || await new Promise(res => canvas.toBlob(res, mime, 0.8));
+				const ext = getExtFromMime(mime);
+				return new File([finalBlob], file.name.replace(/\.[^.]+$/, `.${ext}`), { type: mime });
+			}
+
 			// Date formatting util for attribution
 			const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 			const formatDate = (iso) => { try { return fmt.format(new Date(iso)); } catch { return ''; } };
@@ -1011,7 +1090,7 @@
 									const title = form.title.value;
 									const note = form.note.value;
 									const taken_at = form.taken_at.value || null;
-									const file = form.image.files[0];
+									let file = form.image.files[0];
 									if (!file) {
 										if (error) { error.textContent = 'Please choose an image'; error.style.display = 'block'; }
 										if (submitBtn) submitBtn.disabled = false;
@@ -1020,7 +1099,58 @@
 
 									// show initial loading indicator
 									loadBar.style.width = '20%';
+									try {
+										// 1) Convert HEIC/HEIF to JPEG if needed
+										file = await heicToJpegIfNeeded(file);
+										loadBar.style.width = '35%';
 
+										// 2) If file is larger than 10MB, try to compress/resize
+										if (file.size > TEN_MB) {
+											file = await compressImageToTarget(file, { maxBytes: TEN_MB, maxWidth: 4096, maxHeight: 4096, mime: 'image/jpeg' });
+										}
+										loadBar.style.width = '50%';
+
+										// 3) Validate type and size
+										const fType = (file.type || '').toLowerCase();
+										if (!ACCEPTED_TYPES.some(t => fType.includes(t.split('/')[1]) || fType === t)){
+											throw new Error('Unsupported file type');
+										}
+										if (file.size > TEN_MB) {
+											throw new Error('Image is still larger than 10MB after compression');
+										}
+
+										// 4) Read as data URL
+										const imageBase64 = await readFileAsDataURL(file);
+										loadBar.style.width = '65%';
+
+										const attribution_name = form.attribution_name ? form.attribution_name.value : null;
+										const payload = { title, note, taken_at, attribution_name, is_private: false, imageBase64, filename: file.name };
+										const r = await fetch('/api/import-old-memory', {
+											method: 'POST',
+											headers: { 'Content-Type': 'application/json' },
+											credentials: 'same-origin',
+											body: JSON.stringify(payload)
+										});
+										loadBar.style.width = '80%';
+										const j = await r.json();
+										if (!r.ok) {
+											if (error) { error.textContent = j?.error || 'Upload failed'; error.style.display = 'block'; }
+											loadBar.style.width = '0%';
+											if (submitBtn) submitBtn.disabled = false;
+											return;
+										}
+										// Success - show completion
+										loadBar.style.width = '100%';
+										setTimeout(async () => {
+											await loadAndRenderMemories();
+											setupAddMemoryCard();
+										}, 300);
+									} catch (err) {
+										if (error) { error.textContent = err?.message || 'Upload failed'; error.style.display = 'block'; }
+										loadBar.style.width = '0%';
+										if (submitBtn) submitBtn.disabled = false;
+									}
+									/* Old reader approach kept for reference
 									const reader = new FileReader();
 									reader.onload = async function () {
 										try {
@@ -1057,6 +1187,7 @@
 										}
 									};
 									reader.readAsDataURL(file);
+									*/
 								});
 							}
 					
