@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tiramisu Recipe - Nathan & Hannah</title>
+	<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+	<link rel="shortcut icon" href="favicon/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="Tiramisu Recipe" />
+	<link rel="manifest" href="favicon/site.webmanifest" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="/auth-guard.js"></script>
+	<style>
+		/* New gradient background system - matching index.html */
+		:root{
+			--bg-start: #face95;   /* warm cream/orange */
+			--bg-end:   #f0dba6;   /* soft yellow */
+			--brand:    #f8c788;   /* orange accent */
+			--bg-stop: 50%;
+		}
+
+		body {
+			background:
+				radial-gradient(1600px 2500px at 10% 0%, var(--bg-start) 0%, transparent var(--bg-stop)),
+				radial-gradient(1600px 2500px at 90% 10%,  var(--bg-end) 0%, transparent calc(var(--bg-stop) + 5%)),
+				linear-gradient(180deg, #ffffff 6%, #fafbff 100%);
+			position: relative;
+			min-height: 100vh;
+		}
+
+		body::before{
+			content:"";
+			position: fixed;
+			inset: 0;
+			pointer-events: none;
+			background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .015 .03 0 0 0'/></feComponentTransfer></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+			background-size: 300px 300px;
+			opacity: .35;
+			mix-blend-mode: multiply;
+		}
+
+		/* Blur effect for content when modal is active */
+		body.modal-active > *:not(#recipe-modal) {
+			filter: blur(10px);
+			pointer-events: none;
+			user-select: none;
+		}
+
+		/* Modal styles */
+		#recipe-modal {
+			position: fixed;
+			inset: 0;
+			z-index: 9999;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: rgba(0, 0, 0, 0.75);
+			backdrop-filter: blur(8px);
+			animation: fadeIn 0.3s ease-out;
+		}
+
+		#recipe-modal.hidden {
+			display: none;
+		}
+
+		.modal-content {
+			background: white;
+			border-radius: 1.5rem;
+			padding: 2.5rem;
+			max-width: 500px;
+			width: 90%;
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+			animation: slideUp 0.4s ease-out;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+
+		@keyframes slideUp {
+			from {
+				transform: translateY(20px);
+				opacity: 0;
+			}
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+
+		.accept-btn {
+			background: linear-gradient(90deg, var(--bg-start) 0%, var(--bg-end) 100%);
+			transition: transform 0.2s, box-shadow 0.2s;
+		}
+
+		.accept-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+		}
+
+		.accept-btn:active {
+			transform: translateY(0);
+		}
+	</style>
+</head>
+
+<body class="min-h-screen modal-active">
+	<!-- Modal popup -->
+	<div id="recipe-modal">
+		<div class="modal-content text-center">
+			<h2 class="text-3xl font-bold text-slate-900 mb-4">
+				Welcome to the recipe page for my world-famous Tiramisu!
+			</h2>
+			<p class="text-slate-600 mb-6 text-lg leading-relaxed">
+				This is a special recipe that must never be shared with anyone.
+				By accepting, you promise to never share this recipe and to every time you make this tiramisu you must share it with Nathan! 🧡
+			</p>
+			<button id="accept-btn" 
+					  class="accept-btn w-full py-4 px-8 rounded-xl text-slate-800 font-bold text-lg shadow-lg">
+				I <strong>On Asian</strong> accept the terms above.
+			</button>
+		</div>
+	</div>
+
+	<header class="relative">
+		<!-- decorative gradient blob -->
+		<div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-24 h-72
+					bg-gradient-to-r from-orange-200 via-amber-200 to-yellow-200 blur-3xl opacity-60"></div>
+
+		<div class="relative mx-auto max-w-4xl px-6 pt-20 pb-8">
+			<!-- Glass card -->
+			<div class="backdrop-blur-md bg-white/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,.08)] ring-1 ring-white/60">
+				<div class="px-8 py-7">
+					<div class="flex items-center justify-between mb-4">
+						<a href="/index.html" 
+							 class="inline-flex items-center text-gray-600 hover:text-gray-800 transition">
+							<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+							</svg>
+							Back to Scrapbook
+						</a>
+					</div>
+					<h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 text-center">
+						The Tiramisu Recipe <span aria-hidden="true">☕🍰</span>
+					</h1>
+					<p class="mt-3 text-slate-600 text-center max-w-2xl mx-auto">
+						My world famous tiramisu recipe neatly packaged into our website.
+					</p>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main class="container mx-auto max-w-4xl px-6 py-10">
+		<div class="backdrop-blur-md bg-white/70 rounded-2xl shadow-lg ring-1 ring-white/60 p-8">
+			<!-- Recipe Details Section -->
+			<div class="mb-8">
+				<h2 class="text-2xl font-bold text-slate-800 mb-4">Recipe Details</h2>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+					<div class="bg-white/50 rounded-lg p-4">
+						<p class="text-sm text-gray-600 uppercase tracking-wide">Prep Time</p>
+						<p class="text-2xl font-bold text-slate-800">15 minutes</p>
+					</div>
+					<div class="bg-white/50 rounded-lg p-4">
+						<p class="text-sm text-gray-600 uppercase tracking-wide">Chill Time</p>
+						<p class="text-2xl font-bold text-slate-800">4 hours</p>
+					</div>
+					<div class="bg-white/50 rounded-lg p-4">
+						<p class="text-sm text-gray-600 uppercase tracking-wide">Servings</p>
+						<p class="text-2xl font-bold text-slate-800">8 servings</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Ingredients Section -->
+			<div class="mb-8">
+				<h2 class="text-2xl font-bold text-slate-800 mb-4">Ingredients</h2>
+				<div class="bg-white/50 rounded-lg p-6">
+					<ul class="space-y-2">
+                        <li class="flex items-start">
+							<span class="text-orange-500 mr-3 text-lg">•</span>
+							<span class="text-slate-700 text-lg">4 large egg yolks, cold straight from the fridge</span>
+						</li>
+						<li class="flex items-start">
+							<span class="text-orange-500 mr-3 text-lg">•</span>
+							<span class="text-slate-700 text-lg">2 teaspoons vanilla extract</span>
+						</li>
+						<li class="flex items-start">
+							<span class="text-orange-500 mr-3 text-lg">•</span>
+							<span class="text-slate-700 text-lg">1/4 cup heavy cream, cold straight from the fridge (see note below for the brand)</span>
+						</li>
+						<li class="flex items-start">
+							<span class="text-orange-500 mr-3 text-lg">•</span>
+							<span class="text-slate-700 text-lg">1/2 cup granulated sugar, (100g)</span>
+						</li>
+						<li class="flex items-start">
+                            <span class="text-orange-500 mr-3 text-lg">•</span>
+                            <span class="text-slate-700 text-lg">1/4 teaspoon kosher salt</span>
+						</li>
+						<li class="flex items-start">
+                            <span class="text-orange-500 mr-3 text-lg">•</span>
+                            <span class="text-slate-700 text-lg">16 ounces mascarpone, (from 2 containers) cold straight from the fridge (see below for note on the brand you're using)</span>
+                        </li>
+						<li class="flex items-start">
+							<span class="text-orange-500 mr-3 text-lg">•</span>
+							<span class="text-slate-700 text-lg">24 ladyfingers, (from a 7-ounce package)</span>
+						</li>
+						<li class="flex items-start">
+                            <span class="text-orange-500 mr-3 text-lg">•</span>
+                            <span class="text-slate-700 text-lg">2 cans of store bought cold brew coffee (9 fluid ounces each). These should be black unsweetened coffee. </span>
+						</li>
+						<li class="flex items-start">
+                            <span class="text-orange-500 mr-3 text-lg">•</span>
+                            <span class="text-slate-700 text-lg">2 tablespoons unsweetened cocoa powder, this will be sifted into the tiramisu and as a topping</span>
+						</li>
+					
+					</ul>
+				</div>
+			</div>
+
+			<!-- Instructions Section -->
+			<div class="mb-8">
+				<h2 class="text-2xl font-bold text-slate-800 mb-4">Instructions</h2>
+				<div class="bg-white/50 rounded-lg p-6">
+					<div class="mb-6">
+						<h3 class="text-xl font-semibold text-slate-800 mb-3">To Make the Filling:</h3>
+						<ol class="space-y-4">
+							<li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">1</span>
+								<p class="text-slate-700 pt-1">In the bowl of a stand-up mixer fixed with the paddle attachment (or a large bowl with an electric hand mixer), add the egg yolks, vanilla extract, sugar, kosher salt, and mascarpone.</p>
+							</li>
+							<li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">2</span>
+								<p class="text-slate-700 pt-1">Beat all the ingredients listed in the previous step together for 1 minute; scrape down the sides and then beat again for an additional minute, being sure <strong>NOT</strong> to over beat it. Stick to the two minutes total.</p>
+							</li>
+						</ol>
+					</div>
+					
+					<div>
+						<h3 class="text-xl font-semibold text-slate-800 mb-3">To Assemble the Tiramisu:</h3>
+						<ol class="space-y-4">
+                            <li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">3</span>
+								<p class="text-slate-700 pt-1">Grab your baking dish or whatever you will be putting this in and gently sift a layer of cocoa powder onto the bottom of the dish. You will know you have a layer when you can't see the color from the disk through the layer of cocoa powder</p>
+							</li>
+							<li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">4</span>
+								<p class="text-slate-700 pt-1">Transfer the store bought cold brew coffee to a medium and or small bowl. Working one at a time, quickly dip each lady finger into the coffee. Be sure to not over saturate the ladyfinger with the coffee because then they'll get a bit too soggy. All you need is a quick dip into the coffee. Arrange the dipped ladyfingers in the baking dish, side by side. You can fill the empty spaces by snapping some of the lady fingers into different lengths.</p>
+							</li>
+							<li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">5</span>
+								<p class="text-slate-700 pt-1">Add a few scoops of the filling on top and spread into a 1/4-inch thick layer. Add more filling if you need to. You should not be able to see any of the lady fingers from the top after the cream is placed and spread.</p>
+							</li>
+							<li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">6</span>
+								<p class="text-slate-700 pt-1">Now dust another layer of cocoa powder onto the layer of filling. You'll know you have a good enough layer once you can't see the filling underneath.</p>
+							</li>
+							<li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">7</span>
+								<p class="text-slate-700 pt-1">Now we will repeat what we did on step 4. Working one at a time, dip each lady finger into the coffee just as you did before and arrange them in the baking dish. Be sure to fill in any gaps with snapped pieces.</p>
+							</li>
+                            <li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">8</span>
+								<p class="text-slate-700 pt-1">Now we will repeat what we did for step 5 and 6. Add a few scoops of the filling on top and spread into a 1/4-inch thick layer. Add more filling if you need to. You should not be able to see any of the lady fingers from the top after the cream is placed and spread. Now dust another layer of cocoa powder onto the layer of filling. You'll know you have a good enough layer once you can't see the filling underneath.</p>
+							</li>
+                            <li class="flex items-start">
+								<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--brand)] text-slate-800 font-bold mr-4 flex-shrink-0">9</span>
+								<p class="text-slate-700 pt-1">Repeat this process one more time so that they're three layers of ladyfingers total. Ladyfingers first, then the filling, and finally dust the top with one final layer of cocoa powder.</p>
+							</li>
+						</ol>
+						
+						<!-- Layering Diagram -->
+						<div class="mt-8 bg-white/70 rounded-xl p-6 border-2 border-orange-200">
+							<h4 class="text-lg font-semibold text-slate-800 mb-4 text-center">Final Layering Diagram (Bottom to Top)</h4>
+							<div class="max-w-md mx-auto space-y-1">
+								<!-- Layer 10 - Top Cocoa Powder -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-900 to-amber-950 rounded border-2 border-amber-950 flex items-center justify-center text-white text-xs font-bold">10</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-900 to-amber-950 rounded-lg p-3 text-white font-medium text-center shadow-md">
+										Cocoa Powder
+									</div>
+								</div>
+								<!-- Layer 9 - Filling -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-yellow-100 to-amber-100 rounded border-2 border-amber-200 flex items-center justify-center text-slate-800 text-xs font-bold">9</div>
+									<div class="flex-1 bg-gradient-to-br from-yellow-100 to-amber-100 rounded-lg p-3 text-slate-800 font-medium text-center shadow-md border-2 border-amber-200">
+										Filling
+									</div>
+								</div>
+								<!-- Layer 8 - Ladyfingers -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-200 to-amber-300 rounded border-2 border-amber-400 flex items-center justify-center text-slate-800 text-xs font-bold">8</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-200 to-amber-300 rounded-lg p-3 text-slate-800 font-medium text-center shadow-md border-2 border-amber-400">
+										Ladyfingers
+									</div>
+								</div>
+								<!-- Layer 7 - Cocoa Powder -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-900 to-amber-950 rounded border-2 border-amber-950 flex items-center justify-center text-white text-xs font-bold">7</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-900 to-amber-950 rounded-lg p-3 text-white font-medium text-center shadow-md">
+										Cocoa Powder
+									</div>
+								</div>
+								<!-- Layer 6 - Filling -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-yellow-100 to-amber-100 rounded border-2 border-amber-200 flex items-center justify-center text-slate-800 text-xs font-bold">6</div>
+									<div class="flex-1 bg-gradient-to-br from-yellow-100 to-amber-100 rounded-lg p-3 text-slate-800 font-medium text-center shadow-md border-2 border-amber-200">
+										Filling
+									</div>
+								</div>
+								<!-- Layer 5 - Ladyfingers -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-200 to-amber-300 rounded border-2 border-amber-400 flex items-center justify-center text-slate-800 text-xs font-bold">5</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-200 to-amber-300 rounded-lg p-3 text-slate-800 font-medium text-center shadow-md border-2 border-amber-400">
+										Ladyfingers
+									</div>
+								</div>
+								<!-- Layer 4 - Cocoa Powder -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-900 to-amber-950 rounded border-2 border-amber-950 flex items-center justify-center text-white text-xs font-bold">4</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-900 to-amber-950 rounded-lg p-3 text-white font-medium text-center shadow-md">
+										Cocoa Powder
+									</div>
+								</div>
+								<!-- Layer 3 - Filling -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-yellow-100 to-amber-100 rounded border-2 border-amber-200 flex items-center justify-center text-slate-800 text-xs font-bold">3</div>
+									<div class="flex-1 bg-gradient-to-br from-yellow-100 to-amber-100 rounded-lg p-3 text-slate-800 font-medium text-center shadow-md border-2 border-amber-200">
+										Filling
+									</div>
+								</div>
+								<!-- Layer 2 - Ladyfingers -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-200 to-amber-300 rounded border-2 border-amber-400 flex items-center justify-center text-slate-800 text-xs font-bold">2</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-200 to-amber-300 rounded-lg p-3 text-slate-800 font-medium text-center shadow-md border-2 border-amber-400">
+										Ladyfingers
+									</div>
+								</div>
+								<!-- Layer 1 - Bottom Cocoa Powder -->
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-8 bg-gradient-to-br from-amber-900 to-amber-950 rounded border-2 border-amber-950 flex items-center justify-center text-white text-xs font-bold">1</div>
+									<div class="flex-1 bg-gradient-to-br from-amber-900 to-amber-950 rounded-lg p-3 text-white font-medium text-center shadow-md">
+										Cocoa Powder (Bottom)
+									</div>
+								</div>
+							</div>
+							<p class="text-center text-sm text-slate-600 mt-4 italic">↑ Read from bottom to top ↑</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Notes Section -->
+			<div>
+				<h2 class="text-2xl font-bold text-slate-800 mb-4">Notes & Tips</h2>
+				<div class="bg-white/50 rounded-lg p-6">
+					<ul class="space-y-2">
+						<li class="flex items-start">
+							<span class="text-orange-500 mr-3">💡</span>
+							<span class="text-slate-700"><!-- Add note here --></span>
+						</li>
+						<!-- Add more notes as needed -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="text-center py-8 text-slate-600">
+		Made with 🧡 by Nathan for Hannah
+	</footer>
+
+	<script>
+		// Handle modal acceptance
+		document.getElementById('accept-btn').addEventListener('click', function() {
+			const modal = document.getElementById('recipe-modal');
+			const body = document.body;
+			
+			// Fade out modal
+			modal.style.opacity = '0';
+			modal.style.transition = 'opacity 0.3s ease-out';
+			
+			setTimeout(() => {
+				modal.classList.add('hidden');
+				body.classList.remove('modal-active');
+			}, 300);
+		});
+
+		// Prevent any interaction with the page until modal is accepted
+		document.addEventListener('DOMContentLoaded', function() {
+			// Ensure modal is visible on page load
+			document.body.classList.add('modal-active');
+		});
+	</script>
+</body>
+
+</html>
